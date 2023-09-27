@@ -1,33 +1,38 @@
 #!/usr/bin/node
 // This script prints the number of movies where the character “Wedge Antilles” is present.
-// Your JSON data
-const data = {
-    "count": 7,
-    "next": null,
-    "previous": null,
-    "results": [
-      // ... (your movie data)
-    ]
-  };
-  
-  // Function to count movies with a specific character
-  function countMoviesWithCharacter(data, characterUrl) {
-    let count = 0;
-    data.results.forEach(movie => {
-      const characters = movie.characters;
-      if (characters.includes(characterUrl)) {
-        count++;
-      }
-    });
-    return count;
-  }
-  
-  // Define the character you want to search for (e.g., "Wedge Antilles")
-  const characterToSearch = "http://swapi.co/api/people/18/";
-  
-  // Count movies with the specified character
-  const numMovies = countMoviesWithCharacter(data, characterToSearch);
-  
-  // Print the result
-  console.log(`${numMovies}`);
-  
+const request = require('request');
+
+// Check if the API URL is provided as an argument
+const apiUrl = process.argv[2];
+
+if (!apiUrl) {
+  console.error('Please provide the API URL as an argument.');
+  process.exit(1);
+}
+
+// Character ID for "Wedge Antilles"
+const characterId = 18;
+
+// Function to count movies with the specified character
+function countMoviesWithCharacter(apiUrl, characterId) {
+  request(apiUrl, (error, response, body) => {
+    if (error) {
+      console.error('Error:', error);
+      process.exit(1);
+    }
+
+    if (response.statusCode !== 200) {
+      console.error(`API returned a non-200 status code: ${response.statusCode}`);
+      process.exit(1);
+    }
+
+    try {
+      const data = JSON.parse(body);
+      const movies = data.results.filter(movie => movie.characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`));
+      console.log(`${movies.length}`);
+    } catch (parseError) {
+      console.error('Error parsing API response:', parseError);
+      process.exit(1);
+    }
+  });
+}
