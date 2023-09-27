@@ -23,6 +23,6 @@ request.get(apiUrl, (error, response, body) => {
 
     const numCompletedTasks = completedTasks.length;
 
-    console.log(`User ${userId} has completed ${numCompletedTasks} tasks.`);
+    console.log({userId: numCompletedTasks});
   }
 });
