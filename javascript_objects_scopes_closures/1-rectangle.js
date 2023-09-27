@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#! /usr/bin/node
 // This script contains a class 'Rectangle' which takes 2 arguments 'w' and 'h'
 class Rectangle {
     constructor(w, h) {
