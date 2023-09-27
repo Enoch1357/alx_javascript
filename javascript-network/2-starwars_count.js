@@ -19,6 +19,8 @@ request.get(apiUrl, (error, response, body) => {
     const count = movies.results.reduce((total, movie) => {
       if (movie.characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`)) {
         return total + 1;
+      } else if (movie.characters.includes(`http://swapi.co/api/people/${characterId}/`)) {
+        return total + 1;
       }
       return total;
     }, 0);
