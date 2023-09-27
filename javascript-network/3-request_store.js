@@ -23,8 +23,6 @@ request.get(url, (error, response, body) => {
     fs.writeFile(filePath, body, 'utf-8', (writeError) => {
       if (writeError) {
         console.error('Error writing to file:', writeError);
-      } else {
-        console.log(`Webpage content saved to ${filePath}`);
       }
     });
   }
