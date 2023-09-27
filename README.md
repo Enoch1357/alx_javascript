@@ -1,0 +1,1 @@
+This project is based on and deals with Javascript programming language and it's uses in web development.
