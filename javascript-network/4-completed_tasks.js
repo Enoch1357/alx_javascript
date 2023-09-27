@@ -19,10 +19,14 @@ request.get(apiUrl, (error, response, body) => {
   } else {
     const tasks = JSON.parse(body);
 
-    const completedTasks = tasks.filter((task) => task.userId === parseInt(userId) && task.completed);
+    let numCompletedTasks = 0;
 
-    const numCompletedTasks = completedTasks.length;
+    for (const task of tasks) {
+      if (task.userId === parseInt(userId) && task.completed) {
+        numCompletedTasks++;
+      }
+    }
 
-    console.log({userId: numCompletedTasks});
+    console.log(`User ${userId} has completed ${numCompletedTasks} tasks.`);
   }
 });
