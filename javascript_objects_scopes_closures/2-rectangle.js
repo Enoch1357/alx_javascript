@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#! /usr/bin/node
 // This script contains a class 'Rectangle' with two attributes width and height
 class Rectangle {
     constructor(w, h) {
