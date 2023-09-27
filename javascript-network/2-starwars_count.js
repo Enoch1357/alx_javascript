@@ -29,7 +29,7 @@ function countMoviesWithCharacter(apiUrl, characterId) {
     try {
       const data = JSON.parse(body);
       const movies = data.results.filter(movie => movie.characters.includes(`https://swapi-api.alx-tools.com/api/people/${characterId}/`));
-      console.log(`${movies.length}`);
+      console.log(movies.length);
     } catch (parseError) {
       console.error('Error parsing API response:', parseError);
       process.exit(1);
