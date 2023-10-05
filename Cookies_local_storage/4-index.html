@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        body > div {
+            width: 28%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+        
+        body > div.show {
+            display: block;
+        }
+
+        body > button {
+            width: 150px;
+        }
+
+        h1.welcome {
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        h1.welcome a {
+            text-decoration: none;
+            margin-left: 10px;
+            font-size: 10px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+</head>
+<body>
+    <h1>Login to the website</h1>
+    <div class="login-form" id="loginForm">
+        <input type="text" id="firstname" placeholder="Firstname">
+        <input type="text" id="email" placeholder="Email">
+        <button onclick="setCookies()" id="loginButton">Log me in</button>
+    </div>
+    <h1>Cookies</h1>
+    <button onclick="showCookies()" id="showCookies">Show the cookies</button>
+    
+
+    <script>
+
+        function setCookies() {
+            days = 10
+            const expiryDate = new Date();
+            expiryDate.setDate(expiryDate.getDate() + days);
+            const firstname = document.getElementById('firstname').value;
+            Cookies.set('firstname', firstname, { expires: expiryDate });
+
+            const email = document.getElementById('email').value;
+            Cookies.set('email', email, {expires: expiryDate});            
+        }
+
+        function showCookies() {
+            const firstname = Cookies.get('firstname') || '';
+            const email = Cookies.get('email') || '';
+            
+            const paragraph = document.createElement('p');
+            paragraph.innerHTML = `Email: ${cookieData.email || 'N/A'} - Firstname: ${cookieData.firstname || 'N/A'}`;
+            document.body.appendChild(paragraph);
+        }
+        
+        function showForm() {
+            hideWelcomeMessage();
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.classList.add('show');
+            }
+        }
+        
+        function hideWelcomeMessage() {
+            const welcomeMessage = document.querySelector('h1.welcome');
+            if (welcomeMessage) {
+                welcomeMessage.style.display = 'none';
+            }
+        }
+
+        function hideForm() {
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.style.display = 'none';
+            }
+        }
+        
+        function deleteCookiesAndShowForm() {
+            Cookies.remove('firstname');
+            Cookies.remove('email');
+            hideWelcomeMessage();
+            showForm();
+        }
+
+        function showWelcomeMessageOrForm() {
+            const firstname = Cookies.get('firstname');
+            const welcomeMessage = document.createElement('h1');
+            welcomeMessage.className = 'welcome';
+            welcomeMessage.innerHTML = `Welcome ${firstname} <a href="#" id="logout">(logout)</a>`;
+            document.body.innerHTML = '';
+            document.body.appendChild(welcomeMessage);
+            
+            const logoutLink = document.getElementById('logout');
+            logoutLink.onclick = deleteCookiesAndShowForm;
+        }
+
+        function setCookiesAndShowWelcomeMessage() {
+            const days = 10;
+            const expiryDate = new Date();
+            expiryDate.setDate(expiryDate.getDate() + days);
+            const firstname = document.getElementById('firstname').value;
+            Cookies.set('firstname', firstname, { expires: expiryDate });
+
+            const email = document.getElementById('email').value;
+            Cookies.set('email', email, { expires: expiryDate });
+
+            showWelcomeMessageOrForm();
+        }
+
+        showWelcomeMessageOrForm();
+        
+    </script>
+</body>
+</html>

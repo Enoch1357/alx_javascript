@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        body > div {
+            width: 28%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        body > button {
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login to the website</h1>
+    <div>
+        <input type="text" id="firstname" placeholder="Firstname">
+        <input type="text" id="email" placeholder="Email">
+        <button onclick="setCookies()" id="loginButton">Log me in</button>
+    </div>
+    <h1>Cookies</h1>
+    <button onclick="showCookies()" id="showCookies">Show the cookies</button>
+    
+
+    <script>
+
+        function setCookies() {
+            days = 10
+            const expiryDate = new Date();
+            expiryDate.setDate(expiryDate.getDate() + days);
+            const firstname = document.getElementById('firstname').value;
+            document.cookie = `firstname=${firstname}; expires=${expiryDate.toUTCString()}`;
+
+            const email = document.getElementById('email').value;
+            document.cookie = `email=${email}; expires=${expiryDate.toUTCString()}`;
+            
+        }
+
+        function showCookies() {
+            const cookies = document.cookie.split(';');
+            const cookieData = {};
+
+            for (const cookie of cookies) {
+                const [name, value] = cookie.trim().split('=');
+                cookieData[name] = value;
+            }
+
+            const paragraph = document.createElement('p');
+            paragraph.innerHTML = `Email: ${cookieData.email || 'N/A'} - Firstname: ${cookieData.firstname || 'N/A'}`;
+            document.body.appendChild(paragraph);
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split(';');
+            for (const cookie of cookies) {
+                [cookieName, value] = cookie.trim().split('=');
+                cookieData[cookieName] = value;
+                if (cookieName === name) {
+                    return value;
+                }
+                else {
+                    return '';
+                }
+            }
+            
+        }
+    </script>
+</body>
+</html>
